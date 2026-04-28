@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import LoginScreen from './components/LoginScreen';
 import TargetMonitor from './components/TargetMonitor';
 import SearchConsole from './components/SearchConsole';
+import Nexus3D from './components/Nexus3D';
 
 const tabs = [
   { id: 'monitor', label: 'MONITOR', icon: '◉' },
@@ -91,16 +92,20 @@ const App = () => {
         <div className="wave wave-3" />
       </div>
 
+      {/* 3D Background Elements */}
+      <Nexus3D />
+
       {/* Sidebar */}
       <motion.nav
-        initial={{ x: -80, rotateY: 20 }}
-        animate={{ x: 0, rotateY: 0 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="glass-panel tech-border"
+        initial={{ x: -100, rotateY: 45, translateZ: -200 }}
+        animate={{ x: 0, rotateY: 0, translateZ: 0 }}
+        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        className="glass-panel tech-border projection-surface"
         style={{
-          width: 72, display: 'flex', flexDirection: 'column', alignItems: 'center',
-          padding: '24px 0', margin: 8, zIndex: 10, gap: 8,
-          transformStyle: 'preserve-3d', position: 'relative'
+          width: 76, display: 'flex', flexDirection: 'column', alignItems: 'center',
+          padding: '24px 0', margin: 10, zIndex: 10, gap: 12,
+          transformStyle: 'preserve-3d', position: 'relative',
+          background: 'rgba(2, 8, 20, 0.9)'
         }}
       >
         <div className="tech-corner corner-tl" />
@@ -110,110 +115,90 @@ const App = () => {
 
         {/* Logo */}
         <motion.div
-          whileHover={{ rotateY: 180, scale: 1.1 }}
+          whileHover={{ rotateY: 360, scale: 1.2, translateZ: 50 }}
           style={{
-            width: 44, height: 44, borderRadius: 14,
-            background: 'linear-gradient(135deg, rgba(0,242,255,0.2), rgba(157,80,255,0.2))',
+            width: 48, height: 48, borderRadius: 14,
+            background: 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 20, marginBottom: 24, border: '1px solid rgba(0,242,255,0.3)',
+            fontSize: 22, marginBottom: 30, border: '1px solid var(--accent-cyan)',
             cursor: 'default',
-            boxShadow: '0 0 20px rgba(0,242,255,0.1)',
-            transform: 'translateZ(30px)',
+            boxShadow: '0 0 30px rgba(0,242,255,0.3)',
+            transformStyle: 'preserve-3d'
           }}
         >
           🛰️
         </motion.div>
 
         {/* Nav Items */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
           {tabs.map(tab => (
             <motion.button
               key={tab.id}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.15, translateZ: 30, x: 5 }}
+              whileTap={{ scale: 0.9 }}
               onClick={() => setActiveTab(tab.id)}
               title={tab.label}
               style={{
-                width: 44, height: 44, borderRadius: 12,
-                border: activeTab === tab.id ? '1px solid var(--accent-cyan)' : '1px solid transparent',
-                background: activeTab === tab.id ? 'rgba(0,212,255,0.15)' : 'transparent',
+                width: 46, height: 46, borderRadius: 12,
+                border: activeTab === tab.id ? '1px solid var(--accent-cyan)' : '1px solid rgba(0,242,255,0.1)',
+                background: activeTab === tab.id ? 'rgba(0,242,255,0.2)' : 'transparent',
                 color: activeTab === tab.id ? 'var(--accent-cyan)' : 'var(--text-dim)',
-                fontSize: 18, cursor: 'pointer',
-                transition: 'all 0.3s ease',
+                fontSize: 20, cursor: 'pointer',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                boxShadow: activeTab === tab.id ? '0 0 15px rgba(0,212,255,0.2)' : 'none',
+                boxShadow: activeTab === tab.id ? '0 0 20px rgba(0,242,255,0.3)' : 'none',
+                transformStyle: 'preserve-3d'
               }}
             >
               {tab.icon}
             </motion.button>
           ))}
         </div>
-
-        {/* Logout */}
-        <motion.button
-          whileHover={{ scale: 1.1, color: '#ff4466' }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleLogout}
-          title="Logout"
-          style={{
-            width: 44, height: 44, borderRadius: 12,
-            border: '1px solid transparent',
-            background: 'transparent',
-            color: 'var(--text-dim)',
-            fontSize: 16, cursor: 'pointer',
-            transition: 'all 0.3s',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}
-        >
-          ⏻
-        </motion.button>
       </motion.nav>
 
       {/* Main Content */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', zIndex: 10 }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', zIndex: 10, perspective: '1500px' }}>
         {/* Top Bar */}
         <motion.header
-          initial={{ y: -60 }}
-          animate={{ y: 0 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="glass-panel"
+          initial={{ y: -100, rotateX: -45 }}
+          animate={{ y: 0, rotateX: 0 }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="glass-panel tech-border"
           style={{
-            margin: '8px 8px 0 0', padding: '12px 24px',
+            margin: '10px 10px 0 0', padding: '14px 28px',
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            position: 'relative'
+            position: 'relative', background: 'rgba(2, 8, 20, 0.9)',
+            transformStyle: 'preserve-3d'
           }}
         >
-          <div className="tech-corner corner-tl" style={{ width: 10, height: 10 }} />
-          <div className="tech-corner corner-tr" style={{ width: 10, height: 10 }} />
+          <div className="tech-corner corner-tl" style={{ width: 12, height: 12 }} />
+          <div className="tech-corner corner-tr" style={{ width: 12, height: 12 }} />
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 15 }}>
-            <div className="hud-gauge" style={{ width: 24, height: 24, borderWidth: 1 }} />
-            <h1 className="font-orbitron glow-text scanning-text" style={{ fontSize: 16, fontWeight: 800, color: 'var(--accent-cyan)', letterSpacing: 3 }}>
-              SPECTER_OSINT
+          <div style={{ display: 'flex', alignItems: 'center', gap: 18, transform: 'translateZ(20px)' }}>
+            <div className="hud-gauge" style={{ width: 28, height: 28 }} />
+            <h1 className="font-orbitron glow-text scanning-text floating-3d-text" style={{ fontSize: 18, fontWeight: 900, color: 'var(--accent-cyan)', letterSpacing: 4 }}>
+              SPECTER_OSINT_NODE
             </h1>
-            <span className="text-dim" style={{ fontSize: 9, letterSpacing: 2, background: 'rgba(0,242,255,0.1)', padding: '2px 8px', borderRadius: 4 }}>
-              SECURE_LINK: ENABLED
-            </span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <div className="status-dot" />
-            <span className="font-orbitron text-dim" style={{ fontSize: 9, letterSpacing: 2 }}>
-              AGENT_{agentId} CONNECTED
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14, transform: 'translateZ(20px)' }}>
+            <div className="status-dot" style={{ animation: 'circle-pulse 2s infinite' }} />
+            <span className="font-orbitron text-dim" style={{ fontSize: 10, letterSpacing: 3 }}>
+              UPLINK_ESTABLISHED // AGENT_{agentId}
             </span>
           </div>
         </motion.header>
 
         {/* Page Content */}
-        <div style={{ flex: 1, overflow: 'hidden', padding: '8px 8px 8px 0' }}>
+        <div style={{ flex: 1, overflow: 'hidden', padding: '10px 10px 10px 0', transformStyle: 'preserve-3d' }}>
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.3 }}
-              style={{ height: '100%' }}
+              initial={{ opacity: 0, translateZ: -200, rotateX: 20 }}
+              animate={{ opacity: 1, translateZ: 0, rotateX: 0 }}
+              exit={{ opacity: 0, translateZ: 200, rotateX: -20 }}
+              transition={{ duration: 0.6, type: 'spring', stiffness: 100 }}
+              style={{ height: '100%', transformStyle: 'preserve-3d' }}
             >
               {activeTab === 'monitor' && <TargetMonitor agentId={agentId} />}
               {activeTab === 'search' && <SearchConsole agentId={agentId} />}

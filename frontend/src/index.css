@@ -733,13 +733,80 @@ body {
   animation: scanning-bar 2s ease-in-out infinite;
 }
 
-.hud-gauge {
-  width: 60px;
-  height: 60px;
-  border: 2px solid rgba(0, 242, 255, 0.1);
-  border-top-color: var(--accent-cyan);
+/* 41. 3D Wireframe Spin */
+@keyframes wireframe-spin {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg); }
+}
+
+/* 42. Projection Beam */
+@keyframes projection-beam {
+  0% { transform: scaleY(0); opacity: 0; }
+  50% { transform: scaleY(1); opacity: 0.3; }
+  100% { transform: scaleY(0); opacity: 0; }
+}
+
+/* 43. Glitch Translate */
+@keyframes glitch-3d {
+  0% { transform: translateZ(0) skew(0); }
+  20% { transform: translateZ(10px) skew(2deg); }
+  40% { transform: translateZ(-5px) skew(-1deg); }
+  60% { transform: translateZ(5px) skew(1deg); }
+  100% { transform: translateZ(0) skew(0); }
+}
+
+.wireframe-cube {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: wireframe-spin 20s linear infinite;
+}
+
+.wireframe-face {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border: 1px solid var(--accent-cyan);
+  background: rgba(0, 242, 255, 0.05);
+  box-shadow: 0 0 10px rgba(0, 242, 255, 0.2);
+}
+
+.projection-surface {
+  position: relative;
+  overflow: hidden;
+}
+.projection-surface::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, transparent, var(--accent-cyan), transparent);
+  background-size: 100% 200%;
+  animation: projection-beam 4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.floating-3d-text {
+  text-shadow: 0 0 10px var(--accent-cyan), 0 0 20px var(--accent-cyan);
+  transform: translateZ(50px);
+}
+
+.tech-ring-container {
+  position: absolute;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.tech-ring-3d {
+  position: absolute;
+  border: 2px solid var(--accent-cyan);
   border-radius: 50%;
-  animation: rotate-slow 4s linear infinite;
+  opacity: 0.2;
+  transform-style: preserve-3d;
 }
 
 /* Stagger animations for lists */
