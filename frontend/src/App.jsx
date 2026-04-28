@@ -1,62 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import LoginScreen from './components/LoginScreen';
-import TargetMonitor from './components/TargetMonitor';
+import ScannerConsole from './components/ScannerConsole';
 import SearchConsole from './components/SearchConsole';
 import Nexus3D from './components/Nexus3D';
 
 const tabs = [
-  { id: 'monitor', label: 'MONITOR', icon: '◉' },
-  { id: 'search', label: 'OSINT', icon: '◎' },
+  { id: 'scanner', label: 'SCANNER', icon: '⚡' },
+  { id: 'intel', label: 'INTEL', icon: '◎' },
 ];
 
 const App = () => {
-  const [activeTab, setActiveTab] = useState('monitor');
-  const [agentId, setAgentId] = useState(null);
+  const [activeTab, setActiveTab] = useState('scanner');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const stored = localStorage.getItem('specter_agent_id');
-    if (stored) {
-      fetch('http://localhost:8080/auth/status', { headers: { 'X-Agent-ID': stored } })
-        .then(res => { if (res.ok) setAgentId(stored); })
-        .catch(() => {})
-        .finally(() => setLoading(false));
-    } else {
-      setLoading(false);
-    }
+    setTimeout(() => setLoading(false), 2000);
   }, []);
-
-  const handleLogin = (id) => {
-    localStorage.setItem('specter_agent_id', id);
-    setAgentId(id);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('specter_agent_id');
-    setAgentId(null);
-  };
 
   // Loading screen
   if (loading) {
     return (
-      <div className="water-bg" style={{ height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+      <div className="water-bg aurora-bg" style={{ height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="cyber-grid circuit-bg" />
         <motion.div
-          animate={{ rotate: 360, scale: [1, 1.1, 1] }}
+          animate={{ rotate: 360, scale: [1, 1.2, 1] }}
           transition={{ rotate: { duration: 3, repeat: Infinity, ease: 'linear' }, scale: { duration: 2, repeat: Infinity } }}
-          style={{ fontSize: 48, marginBottom: 20 }}
+          style={{ fontSize: 64, marginBottom: 40, filter: 'drop-shadow(0 0 20px var(--accent-cyan))' }}
         >
-          🌊
+          🛰️
         </motion.div>
-        <div className="anim-shimmer" style={{ width: 200, height: 3, borderRadius: 2, marginBottom: 16 }} />
-        <p className="font-orbitron text-dim" style={{ fontSize: 10, letterSpacing: 4 }}>ESTABLISHING CONNECTION...</p>
+        <div className="anim-shimmer" style={{ width: 300, height: 4, borderRadius: 2, marginBottom: 24, background: 'var(--accent-cyan)' }} />
+        <p className="font-orbitron text-water" style={{ fontSize: 12, letterSpacing: 8, fontWeight: 900 }}>ONYX_CORE_INITIALIZING</p>
       </div>
     );
-  }
-
-  // Login
-  if (!agentId) {
-    return <LoginScreen onLogin={handleLogin} />;
   }
 
   // Main Dashboard
@@ -65,32 +41,6 @@ const App = () => {
       <div className="cyber-grid circuit-bg" />
       <div className="tech-grid-overlay" />
       <div className="scanline" />
-
-      {/* Data Streams */}
-      <div className="data-column" style={{ left: '10%', animationDelay: '0s' }} />
-      <div className="data-column" style={{ left: '90%', animationDelay: '0.5s' }} />
-
-      {/* HUD Rings Background */}
-      <div className="hud-ring" style={{ width: 1000, height: 1000, top: '50%', left: '50%', marginLeft: -500, marginTop: -500, opacity: 0.03 }} />
-      <div className="hud-ring" style={{ width: 600, height: 600, top: '50%', left: '50%', marginLeft: -300, marginTop: -300, opacity: 0.05, animationDirection: 'reverse' }} />
-
-      {/* Ambient bubbles */}
-      {[...Array(5)].map((_, i) => (
-        <div key={i} className="bubble" style={{
-          width: `${6 + Math.random() * 14}px`,
-          height: `${6 + Math.random() * 14}px`,
-          left: `${Math.random() * 100}%`,
-          animationDuration: `${8 + Math.random() * 10}s`,
-          animationDelay: `${Math.random() * 6}s`,
-        }} />
-      ))}
-
-      {/* Waves */}
-      <div className="wave-container">
-        <div className="wave wave-1" />
-        <div className="wave wave-2" />
-        <div className="wave wave-3" />
-      </div>
 
       {/* 3D Background Elements */}
       <Nexus3D />
@@ -177,14 +127,14 @@ const App = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: 18, transform: 'translateZ(20px)' }}>
             <div className="hud-gauge" style={{ width: 28, height: 28 }} />
             <h1 className="font-orbitron glow-text scanning-text floating-3d-text" style={{ fontSize: 18, fontWeight: 900, color: 'var(--accent-cyan)', letterSpacing: 4 }}>
-              SPECTER_OSINT_NODE
+              ONYX_CORE_HUNTER
             </h1>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, transform: 'translateZ(20px)' }}>
             <div className="status-dot" style={{ animation: 'circle-pulse 2s infinite' }} />
             <span className="font-orbitron text-dim" style={{ fontSize: 10, letterSpacing: 3 }}>
-              UPLINK_ESTABLISHED // AGENT_{agentId}
+              UPLINK_ESTABLISHED // SCAN_ENGINE_READY
             </span>
           </div>
         </motion.header>
@@ -200,8 +150,8 @@ const App = () => {
               transition={{ duration: 0.6, type: 'spring', stiffness: 100 }}
               style={{ height: '100%', transformStyle: 'preserve-3d' }}
             >
-              {activeTab === 'monitor' && <TargetMonitor agentId={agentId} />}
-              {activeTab === 'search' && <SearchConsole agentId={agentId} />}
+              {activeTab === 'scanner' && <ScannerConsole />}
+              {activeTab === 'intel' && <SearchConsole />}
             </motion.div>
           </AnimatePresence>
         </div>
