@@ -61,8 +61,13 @@ const App = () => {
   // Main Dashboard
   return (
     <div className="water-bg aurora-bg" style={{ height: '100vh', width: '100vw', display: 'flex', overflow: 'hidden', perspective: '2000px' }}>
-      <div className="cyber-grid" />
+      <div className="cyber-grid circuit-bg" />
+      <div className="tech-grid-overlay" />
       <div className="scanline" />
+
+      {/* Data Streams */}
+      <div className="data-column" style={{ left: '10%', animationDelay: '0s' }} />
+      <div className="data-column" style={{ left: '90%', animationDelay: '0.5s' }} />
 
       {/* HUD Rings Background */}
       <div className="hud-ring" style={{ width: 1000, height: 1000, top: '50%', left: '50%', marginLeft: -500, marginTop: -500, opacity: 0.03 }} />
@@ -95,9 +100,14 @@ const App = () => {
         style={{
           width: 72, display: 'flex', flexDirection: 'column', alignItems: 'center',
           padding: '24px 0', margin: 8, zIndex: 10, gap: 8,
-          transformStyle: 'preserve-3d',
+          transformStyle: 'preserve-3d', position: 'relative'
         }}
       >
+        <div className="tech-corner corner-tl" />
+        <div className="tech-corner corner-tr" />
+        <div className="tech-corner corner-bl" />
+        <div className="tech-corner corner-br" />
+
         {/* Logo */}
         <motion.div
           whileHover={{ rotateY: 180, scale: 1.1 }}
@@ -111,7 +121,7 @@ const App = () => {
             transform: 'translateZ(30px)',
           }}
         >
-          🌊
+          🛰️
         </motion.div>
 
         {/* Nav Items */}
@@ -170,13 +180,20 @@ const App = () => {
           style={{
             margin: '8px 8px 0 0', padding: '12px 24px',
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            position: 'relative'
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <h1 className="font-orbitron glow-text" style={{ fontSize: 16, fontWeight: 800, color: 'var(--accent-cyan)', letterSpacing: 2 }}>
-              SPECTER
+          <div className="tech-corner corner-tl" style={{ width: 10, height: 10 }} />
+          <div className="tech-corner corner-tr" style={{ width: 10, height: 10 }} />
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 15 }}>
+            <div className="hud-gauge" style={{ width: 24, height: 24, borderWidth: 1 }} />
+            <h1 className="font-orbitron glow-text scanning-text" style={{ fontSize: 16, fontWeight: 800, color: 'var(--accent-cyan)', letterSpacing: 3 }}>
+              SPECTER_OSINT
             </h1>
-            <span className="text-dim" style={{ fontSize: 10, letterSpacing: 2 }}>v5.0 STEALTH</span>
+            <span className="text-dim" style={{ fontSize: 9, letterSpacing: 2, background: 'rgba(0,242,255,0.1)', padding: '2px 8px', borderRadius: 4 }}>
+              SECURE_LINK: ENABLED
+            </span>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>

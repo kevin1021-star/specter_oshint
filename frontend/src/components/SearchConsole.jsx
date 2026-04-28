@@ -46,32 +46,33 @@ const SearchConsole = ({ agentId }) => {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="glass-panel"
-        style={{ padding: '20px 24px' }}
+        className="glass-panel tech-border"
+        style={{ padding: '20px 24px', position: 'relative' }}
       >
-        <h2 className="font-orbitron text-water" style={{ fontSize: 13, letterSpacing: 4, marginBottom: 16 }}>
-          ◎ OSINT RESOLVE ENGINE
+        <div className="tech-corner corner-tl" />
+        <div className="tech-corner corner-br" />
+
+        <h2 className="font-orbitron scanning-text" style={{ fontSize: 13, letterSpacing: 4, color: 'var(--accent-cyan)', marginBottom: 16 }}>
+          ◎ OSINT_RESOLVE_ENGINE
         </h2>
         <div style={{ display: 'flex', gap: 12 }}>
           <input
             className="water-input"
-            placeholder="Enter username or pattern (e.g. shubham_s21)"
+            placeholder="ENTER TARGET USERNAME / PATTERN..."
             value={query}
             onChange={e => setQuery(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleSearch()}
-            style={{ flex: 1 }}
+            style={{ flex: 1, fontFamily: 'monospace', letterSpacing: 1 }}
           />
           <button onClick={handleSearch} className="btn-water" disabled={loading} style={{ whiteSpace: 'nowrap' }}>
-            {loading ? '⟳ SCANNING...' : '⊛ RESOLVE'}
+            {loading ? '⟳ SCANNING...' : '⊛ INITIALIZE_SCAN'}
           </button>
         </div>
-        <p className="text-dim" style={{ fontSize: 10, marginTop: 10, letterSpacing: 1 }}>
-          The Stealth Browser will verify each candidate profile on Instagram in real-time.
-        </p>
       </motion.div>
 
       {/* Results */}
-      <div className="glass-panel" style={{ flex: 1, padding: 24, overflowY: 'auto' }}>
+      <div className="glass-panel tech-border" style={{ flex: 1, padding: 24, overflowY: 'auto', position: 'relative' }}>
+        <div className="tech-grid-overlay" opacity="0.3" />
         {!searched && (
           <div style={{ textAlign: 'center', padding: '60px 0' }}>
             <motion.div

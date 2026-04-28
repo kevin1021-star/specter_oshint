@@ -47,71 +47,66 @@ const LoginScreen = ({ onLogin }) => {
 
   return (
     <div className="water-bg aurora-bg" style={{ height: '100vh', width: '100vw', display: 'flex', alignItems: 'center', justifyContent: 'center', perspective: '2000px' }}>
-      <div className="cyber-grid" />
+      <div className="cyber-grid circuit-bg" />
+      <div className="tech-grid-overlay" />
       <div className="scanline" />
       
+      {/* Data Streams */}
+      <div className="data-column" style={{ left: '15%', animationDelay: '0s' }} />
+      <div className="data-column" style={{ left: '85%', animationDelay: '1s' }} />
+
       {/* HUD Rings */}
-      <div className="hud-ring" style={{ width: 600, height: 600, opacity: 0.1 }} />
-      <div className="hud-ring" style={{ width: 400, height: 400, opacity: 0.05, animationDirection: 'reverse' }} />
-
-      {/* Bubbles */}
-      {[...Array(8)].map((_, i) => (
-        <div key={i} className="bubble" style={{
-          width: `${8 + Math.random() * 20}px`,
-          height: `${8 + Math.random() * 20}px`,
-          left: `${10 + Math.random() * 80}%`,
-          animationDuration: `${6 + Math.random() * 8}s`,
-          animationDelay: `${Math.random() * 5}s`,
-        }} />
-      ))}
-
-      {/* Waves */}
-      <div className="wave-container">
-        <div className="wave wave-1" />
-        <div className="wave wave-2" />
-        <div className="wave wave-3" />
-      </div>
+      <div className="hud-ring" style={{ width: 800, height: 800, opacity: 0.05 }} />
+      <div className="hud-ring" style={{ width: 500, height: 500, opacity: 0.08, animationDirection: 'reverse' }} />
 
       {/* Login Card with 3D Tilt */}
       <motion.div
-        initial={{ opacity: 0, y: 40, rotateX: 20, scale: 0.9 }}
+        initial={{ opacity: 0, y: 40, rotateX: 25, scale: 0.8 }}
         animate={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
-        whileHover={{ rotateY: 5, rotateX: -5, translateZ: 50 }}
-        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        whileHover={{ rotateY: 10, rotateX: -10, translateZ: 60 }}
+        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
         ref={containerRef}
         onClick={handleRipple}
         className="ripple-container glass-panel hologram-effect tech-border"
-        style={{ width: 420, padding: '48px 40px', zIndex: 10, transformStyle: 'preserve-3d' }}
+        style={{ width: 440, padding: '52px 40px', zIndex: 10, transformStyle: 'preserve-3d' }}
       >
-        <div style={{ transform: 'translateZ(40px)', transformStyle: 'preserve-3d' }}>
-          {/* Logo */}
-          <div style={{ textAlign: 'center', marginBottom: 36 }}>
+        {/* Tech Corners */}
+        <div className="tech-corner corner-tl" />
+        <div className="tech-corner corner-tr" />
+        <div className="tech-corner corner-bl" />
+        <div className="tech-corner corner-br" />
+
+        <div style={{ transform: 'translateZ(50px)', transformStyle: 'preserve-3d' }}>
+          {/* Logo with Gauge */}
+          <div style={{ textAlign: 'center', marginBottom: 40, position: 'relative' }}>
+            <div className="hud-gauge" style={{ position: 'absolute', top: -10, left: '50%', marginLeft: -40, width: 100, height: 100, opacity: 0.3 }} />
+            
             <motion.div
               animate={{ rotateY: 360 }}
-              transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
+              transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
               style={{
                 width: 80, height: 80, margin: '0 auto 20px',
                 borderRadius: '50%',
-                border: '2px solid rgba(0,242,255,0.4)',
+                border: '2px solid var(--accent-cyan)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 background: 'radial-gradient(circle, rgba(0,242,255,0.2) 0%, transparent 70%)',
-                boxShadow: '0 0 30px rgba(0,242,255,0.2)',
+                boxShadow: '0 0 40px rgba(0,242,255,0.3)',
               }}
             >
               <motion.div
-                animate={{ translateZ: [0, 20, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
+                animate={{ translateZ: [0, 30, 0] }}
+                transition={{ duration: 3, repeat: Infinity }}
                 style={{ fontSize: 32 }}
               >
-                🌊
+                🛰️
               </motion.div>
             </motion.div>
 
-          <h1 className="font-orbitron shimmer-text" style={{ fontSize: 24, fontWeight: 800, letterSpacing: 6 }}>
+          <h1 className="font-orbitron shimmer-text scanning-text" style={{ fontSize: 28, fontWeight: 900, letterSpacing: 8 }}>
             SPECTER
           </h1>
-          <p className="text-dim" style={{ fontSize: 11, letterSpacing: 4, marginTop: 8 }}>
-            OSINT INTELLIGENCE FRAMEWORK
+          <p className="text-dim font-orbitron" style={{ fontSize: 10, letterSpacing: 5, marginTop: 10, opacity: 0.7 }}>
+            OSINT INTELLIGENCE NODE
           </p>
         </div>
 
@@ -171,6 +166,7 @@ const LoginScreen = ({ onLogin }) => {
         <p className="text-dim" style={{ textAlign: 'center', fontSize: 9, marginTop: 24, letterSpacing: 3 }}>
           STEALTH ENGINE v5.0 • PLAYWRIGHT POWERED
         </p>
+        </div>
       </motion.div>
     </div>
   );

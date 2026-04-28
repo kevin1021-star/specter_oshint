@@ -79,24 +79,31 @@ const TargetMonitor = ({ agentId }) => {
       {/* Main Panel */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16, overflow: 'hidden' }}>
         {/* Header */}
-        <div className="glass-panel" style={{ padding: '16px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h2 className="font-orbitron text-water" style={{ fontSize: 13, letterSpacing: 4 }}>
-            ◉ ACTIVE WATCHLIST
+        <div className="glass-panel tech-border" style={{ padding: '16px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative' }}>
+          <div className="tech-corner corner-tl" style={{ width: 8, height: 8 }} />
+          <div className="tech-corner corner-br" style={{ width: 8, height: 8 }} />
+          
+          <h2 className="font-orbitron scanning-text" style={{ fontSize: 13, letterSpacing: 4, color: 'var(--accent-cyan)' }}>
+            ◉ ACTIVE_WATCHLIST
           </h2>
-          <button
-            onClick={() => fetchTargets(true)}
-            className="btn-water"
-            disabled={refreshing}
-            style={{ padding: '8px 16px', fontSize: 9 }}
-          >
-            {refreshing ? (
-              <motion.span animate={{ rotate: 360 }} transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }} style={{ display: 'inline-block' }}>⟳</motion.span>
-            ) : '⟳ REFRESH ALL'}
-          </button>
+          <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+            <span style={{ fontSize: 9, color: 'var(--accent-green)', letterSpacing: 2, fontFamily: 'Orbitron' }}>STATUS: LIVE</span>
+            <button
+              onClick={() => fetchTargets(true)}
+              className="btn-water"
+              disabled={refreshing}
+              style={{ padding: '8px 16px', fontSize: 9 }}
+            >
+              {refreshing ? (
+                <motion.span animate={{ rotate: 360 }} transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }} style={{ display: 'inline-block' }}>⟳</motion.span>
+              ) : '⟳ REFRESH_ENGINE'}
+            </button>
+          </div>
         </div>
 
         {/* Target List */}
-        <div className="glass-panel" style={{ flex: 1, padding: 20, overflowY: 'auto' }}>
+        <div className="glass-panel tech-border" style={{ flex: 1, padding: 20, overflowY: 'auto', position: 'relative' }}>
+          <div className="tech-grid-overlay" opacity="0.3" />
           {loading && targets.length === 0 && (
             <div style={{ textAlign: 'center', padding: 40 }}>
               <motion.div animate={{ rotate: 360 }} transition={{ duration: 2, repeat: Infinity, ease: 'linear' }} style={{ fontSize: 32, display: 'inline-block' }}>🌊</motion.div>
@@ -132,19 +139,23 @@ const TargetMonitor = ({ agentId }) => {
                   display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                   background: 'rgba(0,20,50,0.5)',
                   cursor: 'default',
-                  transformStyle: 'preserve-3d'
+                  transformStyle: 'preserve-3d',
+                  position: 'relative'
                 }}
               >
+                <div className="tech-corner corner-tl" style={{ width: 6, height: 6, opacity: 0.4 }} />
+                <div className="tech-corner corner-br" style={{ width: 6, height: 6, opacity: 0.4 }} />
+
                 {/* Left: Avatar + Info */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14, transform: 'translateZ(30px)', transformStyle: 'preserve-3d' }}>
-                  <div className="anim-depth-pulse" style={{
+                  <div className="anim-depth-pulse hologram-effect" style={{
                     width: 44, height: 44, borderRadius: 12,
                     background: 'linear-gradient(135deg, rgba(0,242,255,0.2), rgba(157,80,255,0.2))',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontSize: 20, border: '1px solid rgba(0,242,255,0.3)',
                     boxShadow: '0 0 20px rgba(0,242,255,0.1)',
                   }}>
-                    👁
+                    🛰️
                   </div>
                   <div>
                     <div className="font-orbitron" style={{ fontSize: 13, fontWeight: 700, color: 'var(--accent-cyan)' }}>
