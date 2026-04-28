@@ -46,9 +46,14 @@ const LoginScreen = ({ onLogin }) => {
   };
 
   return (
-    <div className="water-bg" style={{ height: '100vh', width: '100vw', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div className="water-bg aurora-bg" style={{ height: '100vh', width: '100vw', display: 'flex', alignItems: 'center', justifyContent: 'center', perspective: '2000px' }}>
+      <div className="cyber-grid" />
       <div className="scanline" />
       
+      {/* HUD Rings */}
+      <div className="hud-ring" style={{ width: 600, height: 600, opacity: 0.1 }} />
+      <div className="hud-ring" style={{ width: 400, height: 400, opacity: 0.05, animationDirection: 'reverse' }} />
+
       {/* Bubbles */}
       {[...Array(8)].map((_, i) => (
         <div key={i} className="bubble" style={{
@@ -60,27 +65,6 @@ const LoginScreen = ({ onLogin }) => {
         }} />
       ))}
 
-      {/* Rain */}
-      {[...Array(20)].map((_, i) => (
-        <div key={`r${i}`} className="rain-drop" style={{
-          left: `${Math.random() * 100}%`,
-          height: `${20 + Math.random() * 40}px`,
-          animationDuration: `${1 + Math.random() * 2}s`,
-          animationDelay: `${Math.random() * 3}s`,
-          opacity: 0.15 + Math.random() * 0.2,
-        }} />
-      ))}
-
-      {/* Particles */}
-      {[...Array(12)].map((_, i) => (
-        <div key={`p${i}`} className="particle" style={{
-          left: `${Math.random() * 100}%`,
-          top: `${Math.random() * 100}%`,
-          animationDuration: `${4 + Math.random() * 6}s`,
-          animationDelay: `${Math.random() * 4}s`,
-        }} />
-      ))}
-
       {/* Waves */}
       <div className="wave-container">
         <div className="wave wave-1" />
@@ -88,37 +72,40 @@ const LoginScreen = ({ onLogin }) => {
         <div className="wave wave-3" />
       </div>
 
-      {/* Login Card */}
+      {/* Login Card with 3D Tilt */}
       <motion.div
-        initial={{ opacity: 0, y: 40, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        initial={{ opacity: 0, y: 40, rotateX: 20, scale: 0.9 }}
+        animate={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
+        whileHover={{ rotateY: 5, rotateX: -5, translateZ: 50 }}
+        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
         ref={containerRef}
         onClick={handleRipple}
-        className="ripple-container glass-panel"
-        style={{ width: 420, padding: '48px 40px', zIndex: 10 }}
+        className="ripple-container glass-panel hologram-effect tech-border"
+        style={{ width: 420, padding: '48px 40px', zIndex: 10, transformStyle: 'preserve-3d' }}
       >
-        {/* Logo */}
-        <div style={{ textAlign: 'center', marginBottom: 36 }}>
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-            style={{
-              width: 80, height: 80, margin: '0 auto 20px',
-              borderRadius: '50%',
-              border: '2px solid rgba(0,212,255,0.3)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              background: 'radial-gradient(circle, rgba(0,212,255,0.1) 0%, transparent 70%)',
-            }}
-          >
+        <div style={{ transform: 'translateZ(40px)', transformStyle: 'preserve-3d' }}>
+          {/* Logo */}
+          <div style={{ textAlign: 'center', marginBottom: 36 }}>
             <motion.div
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              style={{ fontSize: 32 }}
+              animate={{ rotateY: 360 }}
+              transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
+              style={{
+                width: 80, height: 80, margin: '0 auto 20px',
+                borderRadius: '50%',
+                border: '2px solid rgba(0,242,255,0.4)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                background: 'radial-gradient(circle, rgba(0,242,255,0.2) 0%, transparent 70%)',
+                boxShadow: '0 0 30px rgba(0,242,255,0.2)',
+              }}
             >
-              🌊
+              <motion.div
+                animate={{ translateZ: [0, 20, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                style={{ fontSize: 32 }}
+              >
+                🌊
+              </motion.div>
             </motion.div>
-          </motion.div>
 
           <h1 className="font-orbitron shimmer-text" style={{ fontSize: 24, fontWeight: 800, letterSpacing: 6 }}>
             SPECTER

@@ -60,8 +60,13 @@ const App = () => {
 
   // Main Dashboard
   return (
-    <div className="water-bg" style={{ height: '100vh', width: '100vw', display: 'flex', overflow: 'hidden' }}>
+    <div className="water-bg aurora-bg" style={{ height: '100vh', width: '100vw', display: 'flex', overflow: 'hidden', perspective: '2000px' }}>
+      <div className="cyber-grid" />
       <div className="scanline" />
+
+      {/* HUD Rings Background */}
+      <div className="hud-ring" style={{ width: 1000, height: 1000, top: '50%', left: '50%', marginLeft: -500, marginTop: -500, opacity: 0.03 }} />
+      <div className="hud-ring" style={{ width: 600, height: 600, top: '50%', left: '50%', marginLeft: -300, marginTop: -300, opacity: 0.05, animationDirection: 'reverse' }} />
 
       {/* Ambient bubbles */}
       {[...Array(5)].map((_, i) => (
@@ -83,24 +88,27 @@ const App = () => {
 
       {/* Sidebar */}
       <motion.nav
-        initial={{ x: -80 }}
-        animate={{ x: 0 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="glass-panel"
+        initial={{ x: -80, rotateY: 20 }}
+        animate={{ x: 0, rotateY: 0 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="glass-panel tech-border"
         style={{
           width: 72, display: 'flex', flexDirection: 'column', alignItems: 'center',
           padding: '24px 0', margin: 8, zIndex: 10, gap: 8,
+          transformStyle: 'preserve-3d',
         }}
       >
         {/* Logo */}
         <motion.div
-          className="anim-depth-pulse"
+          whileHover={{ rotateY: 180, scale: 1.1 }}
           style={{
             width: 44, height: 44, borderRadius: 14,
-            background: 'linear-gradient(135deg, rgba(0,212,255,0.2), rgba(123,47,255,0.2))',
+            background: 'linear-gradient(135deg, rgba(0,242,255,0.2), rgba(157,80,255,0.2))',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 20, marginBottom: 24, border: '1px solid rgba(0,212,255,0.2)',
+            fontSize: 20, marginBottom: 24, border: '1px solid rgba(0,242,255,0.3)',
             cursor: 'default',
+            boxShadow: '0 0 20px rgba(0,242,255,0.1)',
+            transform: 'translateZ(30px)',
           }}
         >
           🌊

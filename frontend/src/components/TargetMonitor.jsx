@@ -115,26 +115,34 @@ const TargetMonitor = ({ agentId }) => {
             {targets.map((t, i) => (
               <motion.div
                 key={t.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ delay: i * 0.08 }}
-                className="glass-panel card-hover"
+                initial={{ opacity: 0, x: -20, rotateY: -15, translateZ: -100 }}
+                animate={{ opacity: 1, x: 0, rotateY: 0, translateZ: 0 }}
+                exit={{ opacity: 0, x: 20, translateZ: -50 }}
+                whileHover={{ 
+                  translateZ: 40, 
+                  rotateY: 8, 
+                  scale: 1.02,
+                  boxShadow: '0 20px 40px rgba(0,242,255,0.15)'
+                }}
+                transition={{ delay: i * 0.06, type: 'spring', stiffness: 120, damping: 15 }}
+                className="glass-panel hologram-effect tech-border"
                 style={{
                   padding: '16px 20px',
                   marginBottom: 12,
                   display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  background: 'rgba(0,20,50,0.4)',
+                  background: 'rgba(0,20,50,0.5)',
                   cursor: 'default',
+                  transformStyle: 'preserve-3d'
                 }}
               >
                 {/* Left: Avatar + Info */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 14, transform: 'translateZ(30px)', transformStyle: 'preserve-3d' }}>
                   <div className="anim-depth-pulse" style={{
                     width: 44, height: 44, borderRadius: 12,
-                    background: 'linear-gradient(135deg, rgba(0,212,255,0.15), rgba(123,47,255,0.15))',
+                    background: 'linear-gradient(135deg, rgba(0,242,255,0.2), rgba(157,80,255,0.2))',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: 20, border: '1px solid rgba(0,212,255,0.2)',
+                    fontSize: 20, border: '1px solid rgba(0,242,255,0.3)',
+                    boxShadow: '0 0 20px rgba(0,242,255,0.1)',
                   }}>
                     👁
                   </div>

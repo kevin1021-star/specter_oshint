@@ -1,20 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --bg-deep: #040810;
-  --bg-surface: #0a1020;
-  --bg-card: rgba(10, 20, 45, 0.7);
-  --water-1: #00d4ff;
-  --water-2: #0099cc;
-  --water-3: #006699;
-  --water-4: #003366;
+  --bg-deep: #02040a;
+  --bg-surface: #050a18;
+  --bg-card: rgba(8, 16, 35, 0.8);
+  --water-1: #00f2ff;
+  --water-2: #00b3ff;
+  --water-3: #0077ff;
+  --water-4: #0044ff;
   --accent-cyan: #00f2ff;
-  --accent-purple: #7b2fff;
+  --accent-purple: #9d50ff;
   --accent-pink: #ff2d95;
+  --accent-gold: #ffcc00;
   --text-primary: #e0f0ff;
   --text-dim: rgba(200, 220, 255, 0.4);
-  --glass-border: rgba(0, 212, 255, 0.15);
-  --glass-bg: rgba(5, 15, 35, 0.6);
+  --glass-border: rgba(0, 242, 255, 0.2);
+  --glass-bg: rgba(4, 12, 28, 0.7);
+  --perspective: 1200px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -228,10 +230,91 @@ body {
   100% { background-position: 0% 0%; }
 }
 
-/* 32. Depth Pulse */
-@keyframes depth-pulse {
-  0%, 100% { transform: scale(1); filter: brightness(1); }
-  50% { transform: scale(1.02); filter: brightness(1.2); }
+/* 33. Card 3D Tilt */
+.tilt-3d {
+  transform-style: preserve-3d;
+  perspective: var(--perspective);
+}
+
+.tilt-3d-inner {
+  transition: transform 0.1s ease-out;
+  transform: translateZ(20px);
+}
+
+/* 34. HUD Spin */
+@keyframes hud-spin {
+  0% { transform: rotate(0deg) scale(1); opacity: 0.5; }
+  50% { transform: rotate(180deg) scale(1.1); opacity: 0.8; }
+  100% { transform: rotate(360deg) scale(1); opacity: 0.5; }
+}
+
+/* 35. 3D Floating Grid */
+@keyframes grid-flow {
+  0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+  100% { transform: perspective(500px) rotateX(60deg) translateY(40px); }
+}
+
+/* 36. Hologram Flicker */
+@keyframes hologram-flicker {
+  0% { opacity: 0.8; transform: skewX(0deg); filter: hue-rotate(0deg); }
+  5% { opacity: 0.4; transform: skewX(2deg); }
+  10% { opacity: 0.8; transform: skewX(0deg); }
+  15% { opacity: 1; filter: hue-rotate(10deg); }
+  20% { opacity: 0.8; }
+  100% { opacity: 0.8; }
+}
+
+/* 37. Cyber Border Trace */
+@keyframes border-trace {
+  0%, 100% { clip-path: inset(0 0 95% 0); }
+  25% { clip-path: inset(0 95% 0 0); }
+  50% { clip-path: inset(95% 0 0 0); }
+  75% { clip-path: inset(0 0 0 95%); }
+}
+
+.cyber-grid {
+  position: absolute;
+  inset: -100% -100%;
+  background-image: linear-gradient(rgba(0, 242, 255, 0.1) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 242, 242, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+  transform: perspective(500px) rotateX(60deg);
+  animation: grid-flow 4s linear infinite;
+  z-index: -1;
+}
+
+.hud-ring {
+  position: absolute;
+  border: 1px dashed var(--accent-cyan);
+  border-radius: 50%;
+  animation: hud-spin 10s linear infinite;
+  pointer-events: none;
+}
+
+.hologram-effect {
+  position: relative;
+}
+.hologram-effect::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(0, 242, 255, 0.1) 50%, transparent 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  animation: hologram-flicker 4s infinite;
+}
+
+.tech-border {
+  position: relative;
+}
+.tech-border::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border: 2px solid var(--accent-cyan);
+  animation: border-trace 4s linear infinite;
+  pointer-events: none;
+  z-index: 1;
 }
 
 

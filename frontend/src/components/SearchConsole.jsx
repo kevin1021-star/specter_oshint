@@ -118,25 +118,32 @@ const SearchConsole = ({ agentId }) => {
           {!loading && results.map((r, i) => (
             <motion.div
               key={r.username}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ delay: i * 0.1 }}
-              className="glass-panel card-hover"
+              initial={{ opacity: 0, y: 20, rotateX: 10, translateZ: -50 }}
+              animate={{ opacity: 1, y: 0, rotateX: 0, translateZ: 0 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              whileHover={{ 
+                translateZ: 30, 
+                rotateX: -5,
+                boxShadow: '0 20px 40px rgba(0,242,255,0.1)'
+              }}
+              transition={{ delay: i * 0.08, type: 'spring' }}
+              className="glass-panel hologram-effect tech-border"
               style={{
                 padding: '18px 22px', marginBottom: 12,
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                background: 'rgba(0,20,50,0.4)',
+                background: 'rgba(0,20,50,0.5)',
+                transformStyle: 'preserve-3d'
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 14, transform: 'translateZ(20px)' }}>
                 <div style={{
                   width: 42, height: 42, borderRadius: 10,
                   background: r.confidence > 80
-                    ? 'linear-gradient(135deg, rgba(0,255,136,0.15), rgba(0,212,255,0.15))'
+                    ? 'linear-gradient(135deg, rgba(0,255,136,0.15), rgba(0,242,255,0.15))'
                     : 'linear-gradient(135deg, rgba(255,150,0,0.15), rgba(255,45,85,0.15))',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   border: `1px solid ${r.confidence > 80 ? 'rgba(0,255,136,0.3)' : 'rgba(255,150,0,0.3)'}`,
+                  boxShadow: `0 0 15px ${r.confidence > 80 ? 'rgba(0,255,136,0.1)' : 'rgba(255,150,0,0.1)'}`,
                   fontSize: 18,
                 }}>
                   {r.confidence > 80 ? '✓' : '?'}
